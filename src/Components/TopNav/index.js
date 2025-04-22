@@ -1,6 +1,10 @@
+import GoogleLogin from 'react-google-login';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import './_top-nav.scss';
 
 const TopNav = ()=>{
+    const cartItemCount = useSelector(state=>state.cr.totalItems);
 
     return(
         <div>
@@ -22,12 +26,28 @@ const TopNav = ()=>{
                 </div>
                 <div className='login-container p-0'>
                     <i className='fa fa-user-circle user-icon'/>
-                    <h5> <a href='#'> Login</a></h5> / <h5><a href='#'>Register</a></h5>
+                    <h5>
+                        <GoogleLogin
+                            clientId='252128207128-uc0uq5krd60sair2j6918e7sp2kvmd89.apps.googleusercontent.com'
+                            buttonText='Login'
+                        />
+                    </h5>
                 </div>
                 <div className='cart-wishlist'>
                     <ul className='p-0'>
-                    <li className='list-icon'> <i className='fa fa-heart'/></li>
-                    <li className='list-icon'> <i className='fa fa-shopping-cart'/> </li>
+                        <li className='list-icon'> <i className='fa fa-heart'/></li>
+                        <Link to="/cart">
+                            <li className='list-icon'>
+                                <i className='fa fa-shopping-cart'/>
+                                {
+                                    cartItemCount!==0 ?
+                                        <div id='cart-item-count'>
+                                            <p> {cartItemCount} </p>
+                                        </div>
+                                    : <></>
+                                }
+                            </li>
+                        </Link>
                     </ul>
                 </div>
                 </div>
